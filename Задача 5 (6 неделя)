@@ -1,0 +1,44 @@
+"""Дан файл. Определите сколько в нем букв (латинского алфавита), слов, строк. Выведите три найденных числа в формате, приведенном в примере. Словом считается последовательность больших и маленьких латинских букв (для проверки того, состоит ли строка только из латинских букв удобно пользоваться методом isalpha()). Все остальные символы считаются разделителями слов.
+
+Ссылка на входной файл:
+https://online.hse.ru/pluginfile.php/604906/question/questiontext/861809/1/789252/input_6_2_2.txt
+
+Пример входного файла:
+
+Beautiful is better than ugly.
+Explicit is better than implicit.
+Simple is better than complex.
+Complex is better than complicated.
+Пример ответа:
+
+Input file contains:
+108 letters
+20 words
+4 lines
+
+"""
+
+fin = open("input_6_2_2.txt", "r", encoding='utf8')
+
+s = fin.read().split()
+cntWord = 0
+for word in s:
+    cntWord += 1
+
+s1 = str(s)
+cntLetter = 0
+for letter in s1:
+    if letter.isalpha() == True:
+        cntLetter +=1
+
+lines = 0
+with open('input_6_2_2.txt') as f:
+    for line in f:
+        lines = lines + 1
+
+print("Input file contains:")
+print(cntLetter, "leters")
+print(cntWord, "words")
+print(lines, "lines")
+
+fin.close()
