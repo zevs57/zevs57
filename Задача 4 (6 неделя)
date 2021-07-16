@@ -1,0 +1,14 @@
+#Выведите все строки данного входного файла в обратном порядке. 
+# Для этого считайте список всех строк при помощи метода readlines().
+#Последняя строка входного файла заканчивается символом '\n'.
+#Ссылка на входной файл: 
+# https://online.hse.ru/pluginfile.php/604906/question/questiontext/861782/1/789251/input_6_2_1.txt
+
+
+
+fin = open("input_6_2_1.txt", "r", encoding='utf8')
+
+s = fin.readlines()
+print("".join(s[::-1]))
+
+fin.close()
