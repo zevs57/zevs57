@@ -1,0 +1,32 @@
+"""В качестве ответа введите все строки наибольшей длины из входного файла, не меняя их порядок.
+
+В данной задаче удобно считать список строк входного файла целиком при помощи метода readlines().
+
+Ссылка на входной файл: https://online.hse.ru/pluginfile.php/604906/question/questiontext/861837/1/789249/input_6_2_3.txt
+
+Пример входного файла:
+
+One
+Twenty one
+Two
+Twenty two
+Пример ответа:
+
+Twenty one
+Twenty two"""
+
+fin = open("input_6_2_3.txt", "r", encoding='utf8')
+
+max = 0
+for line in fin:
+    if len(line) > max:
+        max = len(line)
+print(max)
+
+fin = open("input_6_2_3.txt", "r", encoding='utf8')
+
+for line in fin:
+    if len(line) == max:
+        print(line)
+
+fin.close()
