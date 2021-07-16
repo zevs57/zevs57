@@ -1,0 +1,24 @@
+"""Выведите в обратном порядке содержимое всего файла полностью. Для этого считайте файл целиком при помощи метода read().
+
+Ссылка на входной файл: https://online.hse.ru/pluginfile.php/604906/question/questiontext/861855/1/789253/input_6_2_4.txt
+
+Пример входного файла:
+
+Beautiful is better than ugly.
+Explicit is better than implicit.
+Simple is better than complex.
+Complex is better than complicated.
+Пример ответа:
+
+.detacilpmoc naht retteb si xelpmoC
+.xelpmoc naht retteb si elpmiS
+.ticilpmi naht retteb si ticilpxE
+.ylgu naht retteb si lufituaeB"""
+
+fin = open("input_6_2_4.txt", "r", encoding='utf8')
+
+s = fin.read()
+for i in reversed(s):
+    print(i[::-1], end="")
+
+fin.close()
