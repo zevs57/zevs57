@@ -29,8 +29,7 @@ for line in fin1:
     fats = fats.replace(',', '.')
     carbohydrates = carbohydrates.replace(',', '.')
     carbohydrates = carbohydrates.replace('\n', '')
-    #carbohydrates = carbohydrates.replace('', '0')
-
+    
     # заполним словарь d значениями
     d[name] = kkal, proteins, fats, carbohydrates
 
