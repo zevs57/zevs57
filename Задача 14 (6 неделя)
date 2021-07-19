@@ -1,0 +1,41 @@
+#Вася планирует карьеру и переезд. Для это составил таблицу, в которой для каждого региона записал 
+# зарплаты для разных интересные ему профессий. Таблица доступна по ссылке 
+# https://online.hse.ru/pluginfile.php/604906/question/questiontext/862749/1/789263/salaries_6_5_1.xlsx. 
+# Выведите название региона с самой высокой медианной зарплатой (медианой называется элемент, 
+# стоящий в середине массива после его упорядочивания) и, через пробел, название профессии с 
+# самой высокой средней зарплатой по всем регионам. 
+
+#НЕ ДОДЕЛАЛ
+
+import openpyxl
+from openpyxl import load_workbook
+
+xl = load_workbook("salaries_6_5_1.xlsx", read_only=True)
+sh = xl.active
+
+median_city = []
+for cell_obj in sh["B2":"H9"]:  # находим медиану по городу и составляем список (начинаем со 2 -й строки)
+    list_city = []
+    for cell in cell_obj:
+        list_city.append(cell.value)
+    list_city.sort()
+    median_city.append(list_city[3])
+
+max_med = max(median_city)
+cnt = 0
+for i in range(len(median_city)):
+    if median_city[i] == max_med:
+        number_city = i
+
+list_city = []  # делаем списко из первого и второго столбца, начиная со второй строки
+for cell_obj in sh["A2":"B9"]:
+    for cell in cell_obj:
+        list_city.append(cell.value)
+
+only_city = []
+for i in range(0, len(list_city), 2):
+    only_city.append(list_city[i])
+
+print(only_city[number_city])  # Вывод названия региона с самой высокой медианной зарплатой
+
+#НЕ ДОДЕЛАЛ
