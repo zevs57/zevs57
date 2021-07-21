@@ -1,0 +1,45 @@
+# Васю назначили завхозом в туристической группе и он подошёл к подготовке ответственно, 
+# составив справочник продуктов с указанием калорийности на 100 грамм, а также содержание 
+# белков, жиров и углеводов на 100 грамм продукта. Ему не удалось найти всю информацию, 
+# поэтому некоторые ячейки остались незаполненными (можно считать их значение равным нулю). 
+# Также он использовал какой-то странный офисный пакет и разделял целую и дробную часть чисел запятой. 
+# Таблица доступна по ссылке 
+# https://online.hse.ru/pluginfile.php/604906/question/questiontext/863397/1/789265/trekking2_6_6_2.xlsx
+# 
+# Вася составил раскладку по продуктам на один день (она на листе "Раскладка") с указанием названия 
+# продукта и его количества в граммах. Посчитайте 4 числа: суммарную калорийность и граммы белков, 
+# жиров и углеводов. Числа округлите до целых вниз и введите через пробел.
+
+from openpyxl import load_workbook
+
+wb = load_workbook("trekking2_6_6_2.xlsx", read_only=True)
+sheet = wb["Справочник"]
+d = {} #словарь блюд c параметрами
+
+# заполнения словарю блюд значениями
+for i in range(2, sheet.max_row + 1):
+    produkt = sheet.cell(row=i, column=1).value
+    kkal = sheet.cell(row=i, column=2).value
+    proteins = sheet.cell(row=i, column=3).value
+    fats = sheet.cell(row=i, column=4).value
+    carbohydrates = sheet.cell(row=i, column=5).value
+    d[produkt] = kkal, proteins, fats, carbohydrates
+
+sheet = wb["Раскладка"]
+kal_sum = 0
+proteins_sum = 0
+fats_sum = 0
+carbohydrates_sum = 0
+
+for i in range(2, sheet.max_row + 1):
+    produkt = sheet.cell(row=i, column=1).value
+    weight = sheet.cell(row=i, column=2).value
+    if produkt in d:
+        kal_sum = weight * d[produkt][0] / 100 + kal_sum #каллории
+        if d[produkt][1] != None:
+            proteins_sum = weight * d[produkt][1] / 100 + proteins_sum  #белки
+        if d[produkt][2] != None:
+            fats_sum = weight * d[produkt][2] / 100 + fats_sum #жиры
+        if d[produkt][3] != None:
+            carbohydrates_sum = weight * d[produkt][3] / 100 + carbohydrates_sum #углеводы
+print(int(kal_sum), int(proteins_sum), int(fats_sum), int(carbohydrates_sum))
