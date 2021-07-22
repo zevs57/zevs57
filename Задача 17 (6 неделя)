@@ -1,0 +1,63 @@
+# Васю назначили завхозом в туристической группе и он подошёл к подготовке ответственно,
+# составив справочник продуктов с указанием калорийности на 100 грамм, а также содержание белков,
+# жиров и углеводов на 100 грамм продукта. Ему не удалось найти всю информацию, поэтому некоторые
+# ячейки остались незаполненными (можно считать их значение равным нулю). Также он использовал
+# какой-то странный офисный пакет и разделял целую и дробную часть чисел запятой.
+# Таблица доступна по ссылке
+# https://online.hse.ru/pluginfile.php/604906/question/questiontext/863451/1/789266/trekking3_6_6_3.xlsx
+#
+# Вася составил раскладку по продуктам на весь поход (она на листе "Раскладка") с указанием номера дня,
+# названия продукта и его количества в граммах. Для каждого дня посчитайте 4 числа: суммарную калорийность
+# и граммы белков, жиров и углеводов. Числа округлите до целых вниз и введите через пробел.
+# Информация о каждом дне должна выводиться в отдельной строке.
+
+from openpyxl import load_workbook
+
+wb = load_workbook("trekking3_6_6_3.xlsx", read_only=True)
+sheet = wb["Справочник"]
+d = {}  # словарь блюд c параметрами
+
+# заполнения словарю блюд значениями
+for i in range(2, sheet.max_row + 1):
+    product = sheet.cell(row=i, column=1).value
+    kkal = sheet.cell(row=i, column=2).value
+    proteins = sheet.cell(row=i, column=3).value
+    fats = sheet.cell(row=i, column=4).value
+    carbohydrates = sheet.cell(row=i, column=5).value
+    d[product] = kkal, proteins, fats, carbohydrates
+
+sheet = wb["Раскладка"]
+
+for number_day in range(1, 10):
+    kal_sum_day_ = 0
+    proteins_sum_day_ = 0
+    fats_sum_day_ = 0
+    carbohydrates_sum_day_ = 0
+
+    for i in range(2, sheet.max_row + 1):
+        day = sheet.cell(row=i, column=1).value
+        product = sheet.cell(row=i, column=2).value
+        weight = sheet.cell(row=i, column=3).value
+
+        kal_sum = 0
+        proteins_sum = 0
+        fats_sum = 0
+        carbohydrates_sum = 0
+
+        if day == number_day:
+            kal_sum = weight * d[product][0] / 100 + kal_sum  # каллории
+            if d[product][1] is not None:
+                proteins_sum = weight * d[product][1] / 100 + proteins_sum  # белки
+            if d[product][2] is not None:
+                fats_sum = weight * d[product][2] / 100 + fats_sum  # жиры
+            if d[product][3] is not None:
+                carbohydrates_sum = weight * d[product][3] / 100 + carbohydrates_sum  # углеводы
+
+            kal_sum_day_ = kal_sum_day_ + kal_sum
+            proteins_sum_day_ = proteins_sum_day_ + proteins_sum
+            fats_sum_day_ = fats_sum_day_ + fats_sum
+            carbohydrates_sum_day_ = carbohydrates_sum_day_ + carbohydrates_sum
+    print(int(kal_sum_day_), end=" ")
+    print(int(proteins_sum_day_), end=" ")
+    print(int(fats_sum_day_), end=" ")
+    print(int(carbohydrates_sum_day_))
