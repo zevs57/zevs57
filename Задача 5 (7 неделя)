@@ -1,0 +1,25 @@
+# Мы сохранили страницу с википедии про языки программирования и сохранили по адресу
+# https://raw.githubusercontent.com/psaleksandrova/HSE-OPENEDU-course/main/task_7_2_2.html
+#
+# Скачайте её с помощью скрипта на Питоне и посчитайте, какой язык упоминается чаще Python
+# или C++ (ответ должен быть одной из этих двух строк). Необходимо просто подсчитать количество
+# вхождений слова Python или C++ как подстроки.
+
+
+from urllib.request import urlopen
+from bs4 import BeautifulSoup
+
+response = urlopen("https://raw.githubusercontent.com/psaleksandrova/HSE-OPENEDU-course/main/task_7_2_2.html")
+html = response.read().decode("utf-8")
+soup = BeautifulSoup(html, 'html.parser')
+
+python_number = 0
+for link in soup.find_all(text="Python"):
+    python_number += 1
+
+print("Python упоминается - ", python_number)
+
+c_number = 0
+for link in soup.find_all(text="С++"):
+    c_number += 1
+print("С++ упоминается - ", c_number)
