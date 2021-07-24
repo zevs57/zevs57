@@ -1,0 +1,39 @@
+import time
+from selenium import webdriver
+from selenium.webdriver.support.ui import WebDriverWait
+# meatinfo поднятие каждый час 3 объявлений
+username = "*****" #настоящий логин заменен на **
+password = "*****" #настоящий пароль заменен на **
+# initialize the Chrome driver
+driver = webdriver.Chrome("chromedriver")
+
+# перейти на страницу входа в meatinfo
+driver.get("https://meatinfo.ru/auth?form=1&ref=/")
+# найти поле имени пользователя / электронной почты и отправить само имя пользователя в поле ввода
+driver.find_element_by_id("login").send_keys(username)
+# найти поле ввода пароля и также вставить пароль
+driver.find_element_by_id("passwd").send_keys(password)
+# нажмите кнопку входа в систему
+driver.find_element_by_id("submit-log").click()
+
+for i in range(8):    #восемь циклов поднятий объявлений
+    # перейти на страницу объявления
+    driver.get("https://meatinfo.ru/trade/editOffer?id=482733")
+    time.sleep(10) #задержка 10 секунд для того, чтобы кнопка отправить успела подгрузиться
+    driver.find_element_by_class_name("eo-post-controls__publish-button").click()
+
+    time.sleep(100) #задержка 100 секунд для паузы между объявлениями
+    # перейти на страницу объявления
+    driver.get("https://meatinfo.ru/trade/editOffer?id=432529")
+    time.sleep(10) #задержка 10 секунд для того, чтобы кнопка отправить успела подгрузиться
+    driver.find_element_by_class_name("eo-post-controls__publish-button").click()
+
+    time.sleep(100) #задержка 100 секунд для паузы между объявлениями
+    # перейти на страницу объявления
+    driver.get("https://meatinfo.ru/trade/editOffer?id=481410")
+    time.sleep(10) #задержка 10 секунд для того, чтобы кнопка отправить успела подгрузиться
+    driver.find_element_by_class_name("eo-post-controls__publish-button").click()
+
+    time.sleep(3900) #задержка 1 час 8 минут, т.к. на сайте ограничение 3 объявления в час.
+    
+print("Финиш")
