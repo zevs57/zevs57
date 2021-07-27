@@ -1,0 +1,30 @@
+# Не сошелся ответ
+# Мы сохранили статью с википедии, она доступна по ссылке 
+# https://raw.githubusercontent.com/zevs57/zevs57/main/task_7_4_1.html
+# 
+# Вам необходимо обработать ее с помощью BeautifulSoup и подсчитать все внутренние ссылки, которые не содержат 
+# в себе двоеточия (не являются ссылкой на техническую статью в википедии) и не начинаются с символа #.
+# 
+# Под ссылкой понимается содержимое аттрибута href тега a. Ссылка называется внешней, если она ведет на другой сайт 
+# (т.е. начинается с http:// или https://). Все остальные ссылки являются внутренними.
+# 
+# Вам могут быть полезны методы find_all для супа (он позволяет найти все теги на странице), метод has_attr для 
+# тега (проверяет есть ли такой атрибут у тега) и доступ к атрибуту тега по аналогии со словарем.
+# 
+# В качестве ответа выведите количество внутренних ссылок, удовлетворяющих условию.
+
+from urllib.request import urlopen
+from bs4 import BeautifulSoup
+
+response = urlopen("https://raw.githubusercontent.com/zevs57/zevs57/main/task_7_4_1.html")
+html = response.read().decode("utf-8")
+soup = BeautifulSoup(html, 'html.parser')
+links = []
+
+for link in soup.find_all("a"):
+    if link.has_attr("href"):
+        s = link.get("href")
+        if not s.startswith("http://") and not s.startswith("https://") and not "#" in s and ":" not in s:
+            links.append(link.get("href"))
+print(len(links))
+print(links)
