@@ -8,8 +8,8 @@ timer = int(input())
 time.sleep(timer*60)  # таймер начала работы программы
 
 # meatinfo поднятие каждый час 3 объявлений
-username = "zevs57@gmail.com"
-password = "fanufu"
+username = "***" #настоящий логин заменен на ***
+password = "***" #настоящий пароль заменен на ***
 # initialize the Chrome driver
 driver = webdriver.Chrome("chromedriver")
 
