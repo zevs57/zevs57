@@ -1,0 +1,19 @@
+# В файле https://raw.githubusercontent.com/zevs57/zevs57/main/task_7_6_3.html
+# находится одна таблица. Просуммируйте все числа в ней. Теперь мы не только добавили разных тегов для изменения
+# стиля отображения, но и сделали невалидный HTML-код (правда, браузеры его отображают,
+# а вот с BeautifulSoup могут быть проблемы). Невалидный HTML-код - не редкость в интернете,
+# надо учиться работать и с этим.
+#
+# Вы можете исправить html-код или попробовать использовать нестандартный парсер html,
+# такой как html5lib (вместо html.parser).
+
+from urllib.request import urlopen
+from bs4 import BeautifulSoup
+
+response = urlopen("https://raw.githubusercontent.com/zevs57/zevs57/main/task_7_6_3.html")
+html = response.read().decode("utf-8")
+soup = BeautifulSoup(html, 'html.parser')
+sum = 0
+for link in soup.find_all("td"):
+    sum += int(link.get_text())
+print(sum)
