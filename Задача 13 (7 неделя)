@@ -1,0 +1,42 @@
+# В этой задаче достаточно вам необходимо найти все внутренние ссылки, которые есть в обеих статьях:
+# https://raw.githubusercontent.com/zevs57/zevs57/main/task_7_5_1%2528Moscow%2529.html и
+# https://raw.githubusercontent.com/zevs57/zevs57/05cf8c8597ec4c98fcd7094022741ba33bcbfcf0/task_7_5_1%2528New-York%2529.html
+# и вывести их в алфавитном порядке по одной в строке.
+#
+# Обратите внимание, что если ссылка встречается в статье несколько раз, то учитывать ее нужно лишь однажды.
+#
+
+
+from urllib.request import urlopen
+from bs4 import BeautifulSoup
+
+
+def getlinks(url):
+    response = urlopen(url)
+    html = response.read().decode("utf-8")
+    soup = BeautifulSoup(html, 'html.parser')
+    links = set()
+
+    for link in soup.find_all("a"):
+        if link.has_attr("href"):
+            s = link.get("href")
+            if not s.startswith("http://") and not s.startswith("https://") and not s.startswith(
+                    "#") and not "//" in s and ":" not in s:
+                links.add(link.get("href"))
+    return links
+
+d1 = ()
+d2 = ()
+d3 = ()
+links1 = getlinks("https://raw.githubusercontent.com/zevs57/zevs57/main/task_7_5_1%2528Moscow%2529.html")
+d1 = set(links1)
+links2 = getlinks("https://raw.githubusercontent.com/zevs57/zevs57/05cf8c8597ec4c98fcd7094022741ba33bcbfcf0/"
+                  "task_7_5_1%2528New-York%2529.html")
+d2 = set(links2)
+d3 = d1 & d2
+list =[]
+for link in d3:
+    list.append(link)
+list = sorted(list)
+for i in list:
+    print(i)
