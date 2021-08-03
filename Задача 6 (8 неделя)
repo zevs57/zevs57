@@ -1,0 +1,22 @@
+# В OpenStreetMap XML встречаются теги way, которые соответствуют некоторым линиям и многоугольникам на карте.
+# Way состоит из списка нодов (точек), которые задаются тегами nd вложенными в тег way.
+# Для доступного по ссылке task_8_3_2_map2.osm определите id того way, который содержит в себе наибольшее количество
+# нодов. Если таких несколько - выведите тот id, который встречается в файле раньше.
+
+from urllib.request import urlopen, urlretrieve
+from bs4 import BeautifulSoup
+
+xml = open('task_8_3_2_map2.osm', "r", encoding="utf8").read()  # скачиваем файл
+soup = BeautifulSoup(xml, 'lxml')  # делаем суп с помощью lxml
+
+cnt = 0
+cnt_node = 0
+d = {}
+for way in soup.find_all('way'):  # идем по всем тэгам way
+    cnt = 0
+    for nd in way("nd"):
+        cnt += 1
+    d[way["id"]] = cnt  # наполняем словарь ключ id текущего way
+
+sorts = sorted(d.items(), key=lambda x: (-x[1]))  # Сортируем список по убыванию
+print(sorts[0][0])
