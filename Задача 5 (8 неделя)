@@ -1,0 +1,23 @@
+# В OpenStreetMap XML встречаются теги node, которые соответствуют некоторым точкам на карте. 
+# Ноды могут не только обозначать какой-то точечный объект, но и входить в состав way 
+# (некоторой линии, возможно замкнутой) и не иметь собственных тегов. 
+# Для доступного по ссылке 
+# https://online.hse.ru/pluginfile.php/604906/question/questiontext/868170/1/789300/task_8_3_1_map2.osm 
+# фрагмента карты посчитайте, сколько всего тегов node не содержат в себе ни одного тега tag (первое число в ответе), 
+# а сколько содержит хотя бы один тег tag (второе число в ответе). Числа введите через пробел.
+
+from urllib.request import urlopen, urlretrieve
+from bs4 import BeautifulSoup
+
+xml = open('task_8_3_1_map2.osm', "r", encoding="utf8").read()  # скачиваем файл
+soup = BeautifulSoup(xml, 'lxml')  # делаем суп с помощью lxml
+
+cnt_tag = 0
+cnt_node = 0
+for node in soup.find_all('node'):  # идем по всем тэгам node, которые содержат TAG
+    cnt_node += 1
+    for tag in node("tag"):
+        cnt_tag += 1
+        break  #Как только нашли первый tag в node, прерываем цикл
+print(cnt_node-cnt_tag)
+print(cnt_tag)
