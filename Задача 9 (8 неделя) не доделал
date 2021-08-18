@@ -1,0 +1,27 @@
+# НЕ ДОДЕЛАЛ.
+# Напишите программу, которая будет разрезать большую прямоугольную область на N×N одинаковых прямоугольных областей. 
+# Области задаются четырьмя координатами: минимальной широтой, минимальной долготой, максимальной широтой, 
+# максимальной долготой.
+# 
+# При выводе области должны быть упорядочены по возрастанию минимальной широты, а в случае равных широт - 
+# по возрастанию минимальной долготы.
+# 
+# Гарантируется, что все числа во входных данных положительны. 
+
+vvod = input()
+coordinates = []
+coordinates = vvod.split()
+minlat = float(coordinates[0])
+minlon = float(coordinates[1])
+maxlat = float(coordinates[2])
+maxlon = float(coordinates[3])
+N = int(input())
+dlat = (maxlat - minlat) / (N)
+dlon = (maxlon - minlon) / (N)
+for i in range(int(N)):
+    for j in range(int(N)):
+        nminlat = minlat + dlat * i
+        nmaxlat = minlat + dlat * (i + 1)
+        nminlon = minlon + dlat * j
+        nmaxlon = minlon + dlat * (j + 1)
+        print(float(nminlat), float(nminlon), float(nmaxlat), float(nmaxlon))
