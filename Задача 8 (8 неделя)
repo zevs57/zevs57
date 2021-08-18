@@ -1,0 +1,18 @@
+# Вася, открывший заправку в прошлой задаче, разорился. Конкуренция оказалась слишком большой. 
+# Вася предполагает, что это произошло от того, что теги заправки могут быть не только на точке, 
+# но и на каком-то контуре. Определите, сколько заправок на самом деле (не только обозначенных node, но и way) 
+# есть на фрагменте карты task_8_4_2_map2.osm
+
+from bs4 import BeautifulSoup
+
+xml = open('task_8_4_2_map2.osm', "r", encoding="utf8").read()  # скачиваем файл
+soup = BeautifulSoup(xml, 'lxml')  # делаем суп с помощью lxml
+
+zapravok = 0
+for node in soup.find_all("node"):  # идем по всем тэгам amenity
+    for fuel in node(v="fuel"):
+        zapravok += 1
+for way in soup.find_all("way"):  # идем по всем тэгам amenity
+    for fuel in way(v="fuel"):
+        zapravok += 1
+print(zapravok)
